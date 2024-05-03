@@ -17,6 +17,8 @@ options.UseMySql(
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options => options.AddPolicy("allowOrigin", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+
 builder.Services.AddControllers();
 
 
@@ -53,7 +55,7 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast")
 .WithOpenApi();
-
+app.UseCors("allowOrigin");
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
